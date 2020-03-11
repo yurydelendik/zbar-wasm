@@ -1,0 +1,9 @@
+**/CMakeFiles/
+**/CMakeCache.txt
+**/Makefile
+**/*.cmake
+**/.libs
+**/.deps
+**/.dirstamp
+**/*.o
+**/*.lo

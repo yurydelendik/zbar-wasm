@@ -279,6 +279,7 @@ int _zbar_processor_init (zbar_processor_t *proc)
     state->kick_fds[0] = state->kick_fds[1] = -1;
 
     if(proc->threaded) {
+        abort();
         /* FIXME check errors */
         if(pipe(state->kick_fds))
             return(err_capture(proc, SEV_FATAL, ZBAR_ERR_SYSTEM, __func__,

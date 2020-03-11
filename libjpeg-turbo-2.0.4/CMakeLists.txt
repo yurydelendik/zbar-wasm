@@ -1,5 +1,13 @@
 cmake_minimum_required(VERSION 2.8.12)
 
+SET(CMAKE_SYSTEM_NAME WebAssembly)
+
+SET(CMAKE_SYSTEM_PROCESSOR wasm32)
+SET(CMAKE_CROSSCOMPILING 1)
+
+add_compile_definitions(__wasm)
+add_link_options(-Wl,no-entry)
+
 if(CMAKE_EXECUTABLE_SUFFIX)
   set(CMAKE_EXECUTABLE_SUFFIX_TMP ${CMAKE_EXECUTABLE_SUFFIX})
 endif()

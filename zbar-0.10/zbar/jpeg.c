@@ -24,7 +24,13 @@
 #include <stdio.h>
 #include <jpeglib.h>
 #include <jerror.h>
+#ifdef __wasm
+typedef void* jmp_buf;
+void longjmp(void* e, int i) { abort(); }
+int setjmp(void *e) { return 0; }
+#else
 #include <setjmp.h>
+#endif
 #include <assert.h> /* FIXME tmp debug */
 
 #undef HAVE_STDLIB_H
