@@ -2,8 +2,8 @@
 # Get sources
 
 ```
-curl -L http://sourceforge.net/projects/zbar/files/zbar/0.10/zbar-0.10.tar.bz2 | tar -xf -
-curl -L https://sourceforge.net/projects/libjpeg-turbo/files/2.0.4/libjpeg-turbo-2.0.4.tar.gz | tar -xf -
+curl -L https://sourceforge.net/projects/zbar/files/zbar/0.10/zbar-0.10.tar.bz2 | tar -xjf -
+curl -L https://sourceforge.net/projects/libjpeg-turbo/files/2.0.4/libjpeg-turbo-2.0.4.tar.gz | tar -xzf -
 ```
 
 # Build wasm
