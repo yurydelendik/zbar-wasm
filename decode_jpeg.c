@@ -134,11 +134,12 @@ int decode_jpeg(uint8_t* jpeg, size_t jpeg_len, size_t width, size_t height )
 }
 
 int main() {
-    zbar_set_verbosity(32);
+    // zbar_set_verbosity(32);
 
     char *buffer;
     
     FILE* file = fopen("./barcode.jpg", "r");
+    // FILE* file = fopen("./IMG_0837.jpg", "r");
     if (!file) {
         return  4;
     }
@@ -157,7 +158,7 @@ int main() {
     fclose(file);
 
 
-    //int r = decode_jpeg(jpeg, sizeof(jpeg), 8, 8);
+    // int r = decode_jpeg(jpeg, sizeof(jpeg), 8, 8);
     int r = decode_jpeg((uint8_t *)buffer, file_size, 114, 80);
 
     free(buffer);
