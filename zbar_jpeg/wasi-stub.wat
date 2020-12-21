@@ -1,8 +1,13 @@
 (module
   (import "js" "put_i32" (func $put_i32 (param i32 i32)))
   (import "js" "set_time" (func $set_time (param i32)))
+  (import "js" "write" (func $write (param i32 i32 i32)))
   (func $__wasi_fd_write (export "fd_write") (param i32 i32 i32 i32) (result i32)
-    unreachable
+    local.get 1
+    local.get 2
+    local.get 3
+    call $write
+    i32.const 0
   )
   (func $__wasi_fd_close (export "fd_close") (param i32) (result i32)
     unreachable
