@@ -8,7 +8,7 @@ ZBAR_LIBS = \
 CC = $(WASI_PREFIX)/bin/clang
 RANLIB = $(WASI_PREFIX)/bin/ranlib
 WAT2WASM = $(WABT)/wat2wasm
-#SIMD_FLAGS = -DWITH_SIMD=1
+SIMD_FLAGS = -DWITH_SIMD=1
 
 build: wasi-stub.wasm zbar_jpeg.wasm
 
@@ -22,10 +22,10 @@ zbar_jpeg.wasm: zbar_jpeg.c $(ZBAR_LIBS)
 		-Wl,--export=malloc,--export=free
 
 test.wasm: ../libjpeg-turbo-2.0.4/build/libjpeg.a test.c
-	$(CC) test.c -o test.wasm \
+	$(CC) test.c -O2 -o test.wasm \
 	-I$(PWD)/../libjpeg-turbo-2.0.4 \
 	../libjpeg-turbo-2.0.4/build/libjpeg.a \
-	-nostartfiles -fvisibility=hidden
+	-nostartfiles -fvisibility=hidden ${SIMD_FLAGS}
 
 ../zbar-0.10/zbar/.libs/libzbar.a:../libjpeg-turbo-2.0.4/build/libjpeg.a
 	cd ../zbar-0.10; ./configure --without-xshm --without-xv --without-imagemagick --without-gtk --without-python --without-qt --enable-shared=no --disable-pthread --disable-video
@@ -41,4 +41,4 @@ test.wasm: ../libjpeg-turbo-2.0.4/build/libjpeg.a test.c
 clean:
 	make -C ../zbar-0.10/ clean
 	rm -rf ../libjpeg-turbo-2.0.4/build
-#	-rm zbar_jpeg.wasm wasi-stub.wasm
+#	-rm zbar_jpeg.wasm wasi-stub.wasm test.wasm

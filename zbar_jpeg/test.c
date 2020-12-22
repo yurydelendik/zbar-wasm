@@ -8,9 +8,7 @@
 #define FAST_FLOAT  float
 #include <jdct.h>
 
-#define SIMD
-
-#ifdef SIMD
+#if WITH_SIMD == 1
 #include <jsimddct.h>
 #endif
 
@@ -250,7 +248,7 @@ void run(struct Test* test)
     de.sample_range_limit = test->r - test->general.center;
     ci.dct_table = test->q;
 
-#ifndef SIMD
+#if WITH_SIMD == 1
     jpeg_idct_islow(&de, &ci, test->in, rows, 0);
 #else
     jsimd_idct_islow(&de, &ci, test->in, rows, 0);
@@ -270,12 +268,20 @@ void run(struct Test* test)
     }
 }
 
+#define TEST_ITER 10000
+
 void _start()
 {
     int i;
     for (i=0;i<8;i++) rows[i] = &out[i * 8];
+}
 
-    for (i=0; i<sizeof TESTS / sizeof(struct Test); i++) {
-        run(&TESTS[i]);
-    }
+void test() __attribute__((export_name("test")))
+{
+	int i, j;
+	for (j=0; j < TEST_ITER; j++) {
+		for (i=0; i < sizeof TESTS / sizeof(struct Test); i++) {
+			run(&TESTS[i]);
+		}
+	}
 }
