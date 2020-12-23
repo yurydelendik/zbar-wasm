@@ -273,7 +273,7 @@ void run(struct Test* test)
 
 #define TEST_ITER 10000
 
-void _start()
+void _initialize()
 {
     int i;
     for (i=0;i<8;i++) rows[i] = &out[i * 8];
@@ -287,4 +287,10 @@ void test() __attribute__((export_name("test")))
 			run(&TESTS[i]);
 		}
 	}
+}
+
+void test500() __attribute__((export_name("test500")))
+{
+	int i;
+	for(i=0; i<500; i++) test();
 }

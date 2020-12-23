@@ -10,7 +10,7 @@ async function init() {
 
 init()
   .then((i) => {
-    i._start();
+    i._initialize();
 
     const t = Date.now();
     for (let a = 0; a < 500; a++) {

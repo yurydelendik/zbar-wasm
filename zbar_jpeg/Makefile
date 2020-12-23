@@ -25,13 +25,13 @@ test.wasm: ../libjpeg-turbo-2.0.4/build/libjpeg.a test.c
 	$(CC) test.c -O2 -o test.wasm \
 	-I$(PWD)/../libjpeg-turbo-2.0.4 \
 	../libjpeg-turbo-2.0.4/build/libjpeg.a \
-	-nostartfiles -fvisibility=hidden
+	-nostartfiles -fvisibility=hidden -Wl,--entry=_initialize
 
 test-no-simd.wasm: ../libjpeg-turbo-2.0.4/build/libjpeg.a test.c
 	$(CC) test.c -O2 -DDISABLE_SIMD -o test-no-simd.wasm \
 	-I$(PWD)/../libjpeg-turbo-2.0.4 \
 	../libjpeg-turbo-2.0.4/build/libjpeg.a \
-	-nostartfiles -fvisibility=hidden
+	-nostartfiles -fvisibility=hidden -Wl,--entry=_initialize
 
 ../zbar-0.10/zbar/.libs/libzbar.a:../libjpeg-turbo-2.0.4/build/libjpeg.a
 	cd ../zbar-0.10; ./configure --without-xshm --without-xv --without-imagemagick --without-gtk --without-python --without-qt --enable-shared=no --disable-pthread --disable-video
