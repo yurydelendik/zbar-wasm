@@ -8,10 +8,12 @@
 #define FAST_FLOAT  float
 #include <jdct.h>
 
-#if WITH_SIMD == 1
+
+#ifndef DISABLE_SIMD
 #include <jsimddct.h>
 #endif
 
+//#define DUMP_ASSERT
 
 struct Test {
     struct {
@@ -248,13 +250,14 @@ void run(struct Test* test)
     de.sample_range_limit = test->r - test->general.center;
     ci.dct_table = test->q;
 
-#if WITH_SIMD == 1
+#ifdef DISABLE_SIMD
     jpeg_idct_islow(&de, &ci, test->in, rows, 0);
 #else
     jsimd_idct_islow(&de, &ci, test->in, rows, 0);
 #endif
 
     if (memcmp(out, test->out, sizeof out) != 0) {
+#ifdef DUMP_ASSERT		
         int ctr;
   fprintf(stderr, "\t/*out:*/ {%02x", out[0] & 0xff);
   for (ctr=1; ctr < DCTSIZE2;ctr++)fprintf(stderr, ",%02x", out[ctr] & 0xff);
@@ -263,7 +266,7 @@ void run(struct Test* test)
   fprintf(stderr, "\t/*exp:*/ {%02x", test->out[0]);
   for (ctr=1; ctr < DCTSIZE2;ctr++)fprintf(stderr, ",%02x", test->out[ctr]);
   fprintf(stderr, "},\n");
-
+#endif
         __builtin_trap();  
     }
 }
