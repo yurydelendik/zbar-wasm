@@ -23,13 +23,13 @@ zbar_jpeg.wasm: zbar_jpeg.c $(ZBAR_LIBS)
 
 test.wasm: ../libjpeg-turbo-2.0.4/build/libjpeg.a test.c
 	$(CC) test.c -O2 -o test.wasm \
-	-I$(PWD)/../libjpeg-turbo-2.0.4 \
+	-I$(PWD)/../libjpeg-turbo-2.0.4 -I$(PWD)/../libjpeg-turbo-2.0.4/build \
 	../libjpeg-turbo-2.0.4/build/libjpeg.a \
 	-nostartfiles -fvisibility=hidden -Wl,--entry=_initialize
 
 test-no-simd.wasm: ../libjpeg-turbo-2.0.4/build/libjpeg.a test.c
 	$(CC) test.c -O2 -DDISABLE_SIMD -o test-no-simd.wasm \
-	-I$(PWD)/../libjpeg-turbo-2.0.4 \
+	-I$(PWD)/../libjpeg-turbo-2.0.4 -I$(PWD)/../libjpeg-turbo-2.0.4/build \
 	../libjpeg-turbo-2.0.4/build/libjpeg.a \
 	-nostartfiles -fvisibility=hidden -Wl,--entry=_initialize
 
